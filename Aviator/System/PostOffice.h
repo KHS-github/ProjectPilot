@@ -22,7 +22,22 @@ typedef struct _MESSAGE
 
 #include "../System/Object.h"
 
-void PostMessage(int header, std::string srcName, std::string destName, char* packet, int size);
-void SetupTargetObjects(Cache<Object*>* cache);
+class PostOffice
+{
+public:
+    PostOffice(Cache<Object*>* cacheObject);
+    ~PostOffice();
+private:
+    std::queue<Message*> _queueMessage;
+    Cache<Object*>* _cacheObject = nullptr;
+
+    bool _bOfficerGetOffed;
+public:
+    void WorkingOfficer();
+    void SetTargetObjects(Cache<Object*>* cache);
+
+    static void PostMail(int header, std::string srcName, std::string destName, char* packet, int size);
+};
+
 
 #endif //PROJECTPILOT_POSTOFFICE_H

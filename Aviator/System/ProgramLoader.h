@@ -10,12 +10,15 @@
 #include "Object.h"
 #include "../Util/Cache.hpp"
 
+#include "Stage.h"
+
 class ProgramLoader : public Object
 {
 public:
     ProgramLoader();
     ~ProgramLoader();
 private:
+    std::unordered_map<Stage*> m_mapStages;
     Cache<Object*> m_cacheObj;
 protected:
     Display* m_pDisplay;

@@ -1,4 +1,4 @@
-#include<stdio.h>
+/*#include<stdio.h>
 #include<stdlib.h>
 #include<X11/X.h>
 #include<X11/Xlib.h>
@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
     }
     else {
         printf("\n\tvisual %p selected\n", (void *)vi->visualid); /* %p creates hexadecimal output like in glxinfo */
-    }
+/*    }
 
 
     cmap = XCreateColormap(dpy, root, vi->visual, AllocNone);
@@ -92,4 +92,17 @@ int main(int argc, char *argv[]) {
             exit(0);
         }
     } /* this closes while(1) { */
-} /* this is the } which closes int main(int argc, char *argv[]) { */
+//} /* this is the } which closes int main(int argc, char *argv[]) { */
+
+#include "./Aviator/Aviator.h"
+
+
+int main(int argc, char** argv)
+{
+    Aviator* pTest = new Aviator();
+    pTest->Initialize();
+
+    pTest->MainLoop();
+
+    return 0;
+}

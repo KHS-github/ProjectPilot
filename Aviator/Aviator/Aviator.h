@@ -5,7 +5,7 @@
 #ifndef PROJECTPILOT_AVIATOR_H
 #define PROJECTPILOT_AVIATOR_H
 
-#include "./System/ProgramLoader.h"
+#include "../System/ProgramLoader.h"
 
 class Aviator : public ProgramLoader
 {

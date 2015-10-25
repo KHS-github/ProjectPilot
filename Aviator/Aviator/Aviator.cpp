@@ -61,13 +61,3 @@ void Aviator::Process()
 void Aviator::ReadMessage(Message& message)
 {
 }
-
-int main(int argc, char** argv)
-{
-    Aviator* pTest = new Aviator();
-    pTest->Initialize();
-
-    pTest->MainLoop();
-
-    return 0;
-}
