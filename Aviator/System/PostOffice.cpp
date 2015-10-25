@@ -1,27 +1,31 @@
 #include <string>
 #include <thread>
 #include <queue>
-#include "../Util/Cache.h"
+#include <string.h>
+#include "../Util/Cache.hpp"
 
 #include "PostOffice.h"
 
 using namespace std::chrono_literals;
 
 std::queue<Message*> _queueMessage;
-Cache<Object*> _cacheObject; = nullptr;
+Cache<Object*>* _cacheObject = nullptr;
 
-bool threadState = false;
+static bool thrState = false;
 
-void startOffice()
+void startOffice(Cache<Object*>* cacheObject)
 {
-    threadState = true;
+    SetupTargetObjects(cacheObject);
+    thrState = true;
     std::thread office = std::thread([]() {
-       while(threadState)
+       while(thrState)
        {
-           if(_queueMessage.size() > 0){
+           if(_queueMessage.size() > 0 && _cacheObject != nullptr){
                Message* message = _queueMessage.front();
-               Object* object = nullptr;
+               Object* object = _cacheObject->searchData(message->destName);
                object->ReadMessage(*message);
+               delete message;
+               message = nullptr;
                _queueMessage.pop();
            }
            else
@@ -30,4 +34,18 @@ void startOffice()
     });
 }
 
-void PostMessage(int header, std::string srcName, std::string destName, )
+void PostMessage(int header, std::string srcName, std::string destName, char* packet, int size)
+{
+    Message* message = new Message;
+    message->header = header;
+    message->srcName = srcName;
+    message->destName = destName;
+    memcpy((void*)&message->packet, packet, sizeof(char) * size);
+
+    _queueMessage.push(message);
+}
+
+void SetupTargetObjects(Cache<Object*>* cacheObject)
+{
+    _cacheObject = cacheObject;
+}

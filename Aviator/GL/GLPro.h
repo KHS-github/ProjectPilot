@@ -14,7 +14,7 @@ class GLPro : public Object
 {
 public:
     GLPro();
-    ~GlPro();
+    ~GLPro();
 private:
     GLXContext context;
 public:

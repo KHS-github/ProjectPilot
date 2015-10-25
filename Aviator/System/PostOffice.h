@@ -5,7 +5,7 @@
 #ifndef PROJECTPILOT_POSTOFFICE_H
 #define PROJECTPILOT_POSTOFFICE_H
 
-#include "../Util/Cache.h"
+#include "../Util/Cache.hpp"
 
 class Object;
 

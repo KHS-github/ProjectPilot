@@ -5,12 +5,12 @@
 #include "ProgramLoader.h"
 
 void startLogger();
-void startOffice();
+void startOffice(Cache<Object*>* cacheObjects);
 
 ProgramLoader::ProgramLoader()
 {
     startLogger();
-    startOffice();
+    startOffice(&m_cacheObj);
 }
 
 ProgramLoader::~ProgramLoader()

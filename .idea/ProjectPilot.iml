@@ -2,18 +2,22 @@
 <module type="CPP_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/AirportPlatform/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/Aviator.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/Aviator.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/GL/GLPro.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/GL/GLPro.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/System/Activor.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/System/Activor.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/System/Object.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/System/Object.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/System/PostOffice.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/System/PostOffice.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/System/ProgramLoader.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/System/ProgramLoader.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Aviator/Util/Cache.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Aviator/Util/Cache.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/System/Stage.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/System/Stage.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/Util/Cache.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/Util/DefinedPattern.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/Util/DefinedPattern.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/Util/Logger.cpp" isTestSource="false" />

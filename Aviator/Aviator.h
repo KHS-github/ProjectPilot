@@ -15,6 +15,7 @@ public:
 private:
 public:
     virtual void Initialize();
+    virtual void ReadMessage(Message& message);
 protected:
     virtual void Process();
 };

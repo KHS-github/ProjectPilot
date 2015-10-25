@@ -15,7 +15,7 @@ using namespace std::chrono_literals;
 std::queue<Log*> _queueLog;
 FILE* log;
 
-bool threadState = false;
+bool thrState = false;
 
 void WriteLog(Log& data);
 
@@ -33,14 +33,14 @@ void startLogger()
     strftime(strTime, 50, ("./Log/%Y %m %d Log.txt"), timeinfo);
     strFileName = std::string(strTime);
 
-    threadState = true;
+    thrState = true;
     log = fopen(strFileName.c_str(), "a+");
     if(log == NULL) {
         log = fopen(strFileName.c_str(), "w");
     }
 
     std::thread logging = std::thread([](){
-        while(threadState)
+        while(thrState)
         {
             if(_queueLog.size() > 0){
                 Log* logM = _queueLog.front();
@@ -68,7 +68,7 @@ void WriteLog(Log& data)
             break;
         case LOG_TYPE::LOG_FATAL:
             fprintf(log, ("[FATAL]" + strBaseMessage).c_str());
-            threadState = false;
+            thrState = false;
             break;
     }
 }

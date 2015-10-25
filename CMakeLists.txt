@@ -2,4 +2,4 @@ cmake_minimum_required(VERSION 3.3)
 project(ProjectPilot)
 
 add_subdirectory(Aviator)
-add_subdirectory(AirportPlatform)
+#add_subdirectory(AirportPlatform)

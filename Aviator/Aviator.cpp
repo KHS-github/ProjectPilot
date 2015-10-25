@@ -1,12 +1,9 @@
-#include <stdio.h>
 #include <string>
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <GL/glx.h>
 
 #include "Aviator.h"
-#include "Util/Logger.h"
-#include "Util/PostOffice.h"
 
 
 Aviator::Aviator() : ProgramLoader()
@@ -15,14 +12,6 @@ Aviator::Aviator() : ProgramLoader()
 
 Aviator::~Aviator()
 {
-}
-
-Aviator* Aviator::onCreate()
-{
-    Aviator* aviator = new Aviator();
-
-
-    return aviator;
 }
 
 void Aviator::Initialize()
@@ -67,6 +56,10 @@ void Aviator::Initialize()
 void Aviator::Process()
 {
     ProgramLoader::Process();
+}
+
+void Aviator::ReadMessage(Message& message)
+{
 }
 
 int main(int argc, char** argv)

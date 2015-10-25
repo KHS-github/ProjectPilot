@@ -8,7 +8,7 @@
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include "Object.h"
-#include "../Util/Cache.h"
+#include "../Util/Cache.hpp"
 
 class ProgramLoader : public Object
 {
@@ -42,6 +42,8 @@ public:
 
     virtual void Initialize() = 0;
     void MainLoop();
+
+    virtual void ReadMessage(Message& message) = 0;
 };
 
 #endif //PROJECTPILOT_PROGRAMLOADER_H
