@@ -7,12 +7,10 @@
 #include "../GL/GLPro.h"
 
 void startLogger();
-void startOffice(Cache<Object*>* cacheObjects);
 
-ProgramLoader::ProgramLoader()
+ProgramLoader::ProgramLoader() : Object(NULL), m_Worker(&m_cacheObj)
 {
     startLogger();
-    startOffice(&m_cacheObj);
 }
 
 ProgramLoader::~ProgramLoader()
@@ -25,7 +23,7 @@ void ProgramLoader::LoadFromFile(std::string strFileName)
 
 void ProgramLoader::Initialize()
 {
-    GLPro* glEngine = new GLPro();
+    GLPro* glEngine = new GLPro(this);
     glEngine->startGLPro(m_pDisplay, m_pVInfo, m_targetWindow);
     m_cacheObj.RegisterData("glPro", glEngine);
     m_cacheObj.RegisterData("main", this);
@@ -33,9 +31,7 @@ void ProgramLoader::Initialize()
 
 void ProgramLoader::MainLoop()
 {
-    while(true)
-    {
-    }
+    m_Worker.WorkingOfficer();
 }
 
 void ProgramLoader::Process()
@@ -43,8 +39,15 @@ void ProgramLoader::Process()
 }
 
 
-void ProgramLoader::SetX(int X) {m_nX = X;}
-void ProgramLoader::SetY(int Y) {m_nY = Y;}
-void ProgramLoader::SetHeight(int height) {m_nHeight = height;}
-void ProgramLoader::SetWidth(int width) {m_nWidth = width;}
-void ProgramLoader::SetName(std::string name) {m_strName = name;}
+void ProgramLoader::SetX(int X) { m_nX = X; }
+void ProgramLoader::SetY(int Y) { m_nY = Y; }
+void ProgramLoader::SetHeight(int height) { m_nHeight = height; }
+void ProgramLoader::SetWidth(int width) { m_nWidth = width; }
+void ProgramLoader::SetName(std::string name) { m_strName = name; }
+
+int ProgramLoader::GetX() { return m_nX; }
+int ProgramLoader::GetY() { return m_nY; }
+int ProgramLoader::GetWidth() { return m_nWidth; }
+int ProgramLoader::GetHeight() { return m_nHeight; }
+std::string ProgramLoader::GetName() { return m_strName; }
+PostOffice& ProgramLoader::GetOfficer() { return m_Worker; }

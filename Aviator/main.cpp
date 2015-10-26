@@ -94,15 +94,37 @@ int main(int argc, char *argv[]) {
     } /* this closes while(1) { */
 //} /* this is the } which closes int main(int argc, char *argv[]) { */
 
-#include "./Aviator/Aviator.h"
+#include "main.h"
 
+ProgramLoader* g_loader;
+
+Main::Main() : _loader(nullptr)
+{
+}
+
+Main::~Main()
+{
+}
+
+void Main::StartApp(int argc, char** argv)
+{
+    _loader = new Aviator();
+
+    g_loader = _loader;
+
+    _loader->Initialize();
+
+    _loader->MainLoop();
+}
+
+ProgramLoader* getMainLoader()
+{
+    return g_loader;
+}
 
 int main(int argc, char** argv)
 {
-    Aviator* pTest = new Aviator();
-    pTest->Initialize();
-
-    pTest->MainLoop();
-
+    Main I;
+    I.StartApp(argc, argv);
     return 0;
 }

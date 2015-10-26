@@ -3,13 +3,23 @@
 #include <queue>
 #include <string.h>
 #include "../Util/Cache.hpp"
+#include "../Util/Logger.h"
 
 #include "PostOffice.h"
 
+#include "../main.h"
+
 using namespace std::chrono_literals;
+
+int PostOffice::m_createdObject = 0;
 
 PostOffice::PostOffice(Cache<Object*>* cacheObject) : _cacheObject(cacheObject), _bOfficerGetOffed(false)
 {
+    if(m_createdObject == 1){
+        PostLog(LOG_TYPE::LOG_WARNING, "PostOffice.cpp", "PostOffice can't be created twice.");
+        return;
+    }
+    m_createdObject++;
 }
 
 PostOffice::~PostOffice()
@@ -29,7 +39,7 @@ void PostOffice::WorkingOfficer()
             _queueMessage.pop();
         }
         else
-            std::this_thread::__sleep_for(15ms);
+            std::this_thread::sleep_for(15ms);
     }
 }
 
@@ -41,7 +51,7 @@ void PostOffice::PostMail(int header, std::string srcName, std::string destName,
     message->destName = destName;
     memcpy((void*)&message->packet, packet, sizeof(char) * size);
 
-    _queueMessage.push(message);
+    getMainLoader()->GetOfficer()._queueMessage.push(message);
 }
 
 /*

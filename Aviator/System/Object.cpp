@@ -4,7 +4,7 @@
 
 #include "Object.h"
 
-Object::Object()
+Object::Object(Object* pParent) : m_pParent(pParent)
 {
 }
 

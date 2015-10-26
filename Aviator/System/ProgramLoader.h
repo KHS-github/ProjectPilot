@@ -7,10 +7,13 @@
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
-#include "Object.h"
-#include "../Util/Cache.hpp"
 
+#include "../Util/Cache.hpp"
+#include "../Util/Singleton.hpp"
+
+#include "Object.h"
 #include "Stage.h"
+#include "PostOffice.h"
 
 class ProgramLoader : public Object
 {
@@ -18,8 +21,9 @@ public:
     ProgramLoader();
     ~ProgramLoader();
 private:
-    std::unordered_map<Stage*> m_mapStages;
+    std::unordered_map<std::string, Stage*> m_mapStages;
     Cache<Object*> m_cacheObj;
+    PostOffice m_Worker;
 protected:
     Display* m_pDisplay;
     XVisualInfo* m_pVInfo;
@@ -42,6 +46,13 @@ public:
     void SetWidth(int width);
     void SetHeight(int height);
     void SetName(std::string strName);
+
+    int GetX();
+    int GetY();
+    int GetWidth();
+    int GetHeight();
+    std::string GetName();
+    PostOffice& GetOfficer();
 
     virtual void Initialize() = 0;
     void MainLoop();

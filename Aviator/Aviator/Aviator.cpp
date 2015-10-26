@@ -51,6 +51,8 @@ void Aviator::Initialize()
     m_nWidth = windowAttr.width;
     m_nHeight = windowAttr.height;
     m_strName = "Aviator";
+
+    ProgramLoader::Initialize();
 }
 
 void Aviator::Process()

@@ -9,7 +9,7 @@
 
 class Object;
 
-typedef struct _MESSAGE
+struct Message
 {
     std::string srcName;
     std::string destName;
@@ -17,13 +17,16 @@ typedef struct _MESSAGE
     int header;
     char packet[2500];
 
-} Message;
+};
 
 
-#include "../System/Object.h"
+#include "Object.h"
+#include <queue>
 
 class PostOffice
 {
+private:
+    static int m_createdObject;
 public:
     PostOffice(Cache<Object*>* cacheObject);
     ~PostOffice();

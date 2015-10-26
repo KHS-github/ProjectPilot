@@ -13,7 +13,7 @@
 class GLPro : public Object
 {
 public:
-    GLPro();
+    GLPro(Object* pParent);
     ~GLPro();
 private:
     GLXContext context;

@@ -5,7 +5,7 @@
 #include <thread>
 #include "GLPro.h"
 
-GLPro::GLPro()
+GLPro::GLPro(Object* pParent) : Object(pParent)
 {
 }
 
@@ -21,20 +21,18 @@ void GLPro::startGLPro(Display* display, XVisualInfo* info, Window target)
 
     glEnable(GL_DEPTH_TEST);
 
-    std::thread thr = std::thread([](){
-        Display* pDisp = display;
-        Window tTarget = target;
+    std::thread([display, info, target, this](){
         XEvent event;
         while(true)
         {
-            XNextEvent(pDisp, &event);
+            XNextEvent(display, &event);
             switch(event.type)
             {
                 case Expose:
                     break;
                 case KeyPress:
-                    glXMakeCurrent(pDisp, tTarget, context);
-                    glXDestroyContext(pDisp, context);
+                    glXMakeCurrent(display, target, context);
+                    glXDestroyContext(display, context);
                     return;
             }
         }

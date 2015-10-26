@@ -5,7 +5,7 @@
 #include "Activor.h"
 
 
-Activor::Activor()
+Activor::Activor(Object* pParent) : Object(pParent)
 {
 }
 

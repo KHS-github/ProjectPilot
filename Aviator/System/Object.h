@@ -1,13 +1,14 @@
 #ifndef PROJECTPILOT_OBJECT_H
 #define PROJECTPILOT_OBJECT_H
 
-#include "PostOffice.h"
+struct Message;
+
 #include <unordered_map>
 
 class Object
 {
 public:
-    Object();
+    Object(Object* pParent);
     ~Object();
 private:
     Object* m_pParent;
@@ -19,5 +20,8 @@ public:
 
     Object* getParent();
 };
+
+
+#include "PostOffice.h"
 
 #endif

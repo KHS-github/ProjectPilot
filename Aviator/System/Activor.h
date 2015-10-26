@@ -11,7 +11,7 @@
 class Activor : public Object
 {
 public:
-    Activor();
+    Activor(Object* pParent);
     ~Activor();
 private:
 };

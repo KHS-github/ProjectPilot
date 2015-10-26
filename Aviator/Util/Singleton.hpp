@@ -11,6 +11,7 @@ class Singleton
 public:
     Singleton<T>()
     {
+        m_pInstance = this;
     }
     ~Singleton<T>()
     {
