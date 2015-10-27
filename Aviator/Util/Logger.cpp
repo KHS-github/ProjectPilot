@@ -19,6 +19,37 @@ bool thrState = false;
 
 void WriteLog(Log& data);
 
+void ThreadFunc()
+{
+    while(thrState)
+    {
+        char str[500];
+        int flag = 0;
+        char c = 0;
+        for(int i=0;c = getc(stderr), c != EOF; i++)
+        {
+            flag = 1;
+            str[i] = c;
+        }
+        if(flag == 1)
+        {
+            PostLog(LOG_TYPE::LOG_WARNING, "System", str);
+            flag = 0;
+        }
+        if(_queueLog.size() > 0){
+            Log* logM = _queueLog.front();
+            WriteLog(*logM);
+            delete logM;
+            _queueLog.pop();
+        }
+        else
+            std::this_thread::sleep_for(15ms);
+    }
+
+    fprintf(log, "\n\n");
+    fclose(log);
+}
+
 void startLogger()
 {
     std::string strFileName;
@@ -30,7 +61,7 @@ void startLogger()
     time(&rawtime);
     timeinfo = localtime(&rawtime);
 
-    strftime(strTime, 50, ("./Log/%Y %m %d Log.txt"), timeinfo);
+    strftime(strTime, 50, ("Log/%Y %m %d Log.txt"), timeinfo);
     strFileName = std::string(strTime);
 
     thrState = true;
@@ -39,20 +70,9 @@ void startLogger()
         log = fopen(strFileName.c_str(), "w");
     }
 
-    std::thread logging = std::thread([](){
-        while(thrState)
-        {
-            if(_queueLog.size() > 0){
-                Log* logM = _queueLog.front();
-                WriteLog(*logM);
-                delete logM;
-                _queueLog.pop();
-            }
-            else
-                std::this_thread::sleep_for(15ms);
-        }
-        fclose(log);
-    });
+    fprintf(log, "-------------------<Start Manager>-------------------\n");
+
+    std::thread(ThreadFunc);
 }
 
 void WriteLog(Log& data)

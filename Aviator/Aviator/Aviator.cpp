@@ -1,7 +1,9 @@
-#include <string>
+#include <memory.h>
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #include <GL/glx.h>
+#include <string.h>
+#include <X11/Xutil.h>
 
 #include "Aviator.h"
 
@@ -34,14 +36,15 @@ void Aviator::Initialize()
     colormap = XCreateColormap(display, root, info->visual, AllocNone);
 
     XSetWindowAttributes aviatorAttr;
+    memset((void*)&aviatorAttr, 0, sizeof(XSetWindowAttributes));
     aviatorAttr.colormap = colormap;
     aviatorAttr.event_mask = ExposureMask | KeyPressMask;
 
-    aviatorWnd = XCreateWindow(display, root, windowAttr.x, windowAttr.y, windowAttr.width, windowAttr.height, 0, 0, InputOnly, info->visual
+    aviatorWnd = XCreateWindow(display, root, windowAttr.x, windowAttr.y, (unsigned int)windowAttr.width, (unsigned int)windowAttr.height, 0, info->depth, InputOutput, info->visual
             , CWColormap | CWEventMask, &aviatorAttr);
 
     XMapWindow(display, aviatorWnd);
-    XStoreName(display, aviatorWnd, "User friendly GUI Environment and Development");
+    XStoreName(display, aviatorWnd, "Aviator");
 
     m_pDisplay = display;
     m_targetWindow = aviatorWnd;
@@ -62,4 +65,10 @@ void Aviator::Process()
 
 void Aviator::ReadMessage(Message& message)
 {
+    switch(message.header)
+    {
+        case 0:
+            Initialize();
+            break;
+    }
 }

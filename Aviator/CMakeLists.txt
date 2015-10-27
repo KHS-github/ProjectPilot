@@ -6,11 +6,11 @@ include_directories(${X11_INCLUDE_DIRS})
 link_directories(${OPENGL_glu_LIBRARY})
 link_directories(${OPENGL_gl_LIBRARY})
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++14 -pthread")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -pthread")
 
 set(GL_MODULES ./GL/GLPro.cpp)
 set(SYSTEM_MODULES ./System/PostOffice.cpp ./System/ProgramLoader.cpp ./System/Stage.cpp ./System/Object.cpp ./System/Activor.cpp)
-set(UTIL_MODULES ./Util/Cache.hpp ./Util/Logger.cpp ./Util/DefinedPattern.cpp ./Util/Singleton.hpp)
+set(UTIL_MODULES ./Util/Cache.hpp ./Util/Logger.cpp ./Util/DefinedPattern.cpp ./Util/Singleton.hpp ./Util/ReadStream.cpp ./Util/WriteStream.cpp)
 set(AVIATOR_OBJ ./Aviator/Aviator.cpp)
 
 add_executable(Aviator main.cpp)

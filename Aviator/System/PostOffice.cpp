@@ -29,6 +29,7 @@ PostOffice::~PostOffice()
 void PostOffice::WorkingOfficer()
 {
     _bOfficerGetOffed = true;
+    PostMail(0, "System", "main", "Hello!", strlen("Hello!"));
     while(_bOfficerGetOffed)
     {
         if(_queueMessage.size() > 0 && _cacheObject != nullptr){

@@ -5,12 +5,14 @@
 #include <thread>
 #include "ProgramLoader.h"
 #include "../GL/GLPro.h"
+#include "../Util/Stream.h"
 
 void startLogger();
 
 ProgramLoader::ProgramLoader() : Object(NULL), m_Worker(&m_cacheObj)
 {
     startLogger();
+    m_cacheObj.RegisterData("main", this);
 }
 
 ProgramLoader::~ProgramLoader()
@@ -24,9 +26,16 @@ void ProgramLoader::LoadFromFile(std::string strFileName)
 void ProgramLoader::Initialize()
 {
     GLPro* glEngine = new GLPro(this);
-    glEngine->startGLPro(m_pDisplay, m_pVInfo, m_targetWindow);
     m_cacheObj.RegisterData("glPro", glEngine);
-    m_cacheObj.RegisterData("main", this);
+    WriteStream stream;
+    stream.WriteObjPointer(m_pDisplay);
+    stream.WriteObjPointer(m_pVInfo);
+    stream.WriteLong(m_targetWindow);
+    PostOffice::PostMail(0, "ProgramLoader", "glPro", stream.GetStream(), stream.GetLength());
+    stream.Clear();
+    stream.WriteObjPointer(m_pDisplay);
+    stream.WriteLong(m_targetWindow);
+    PostOffice::PostMail(1, "ProgramLoader", "glPro", stream.GetStream(), stream.GetLength());
 }
 
 void ProgramLoader::MainLoop()

@@ -19,6 +19,7 @@ private:
     GLXContext context;
 public:
     void startGLPro(Display* display, XVisualInfo* info, Window target);
+    void startRenderer(Display* display, Window target);
     void endGLPro();
 
     virtual void ReadMessage(Message& message);

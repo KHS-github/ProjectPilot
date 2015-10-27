@@ -112,8 +112,6 @@ void Main::StartApp(int argc, char** argv)
 
     g_loader = _loader;
 
-    _loader->Initialize();
-
     _loader->MainLoop();
 }
 

@@ -22,7 +22,9 @@
       <sourceFolder url="file://$MODULE_DIR$/Aviator/Util/DefinedPattern.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/Util/Logger.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/Util/Logger.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/Util/ReadStream.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/Util/Singleton.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/Util/WriteStream.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/main.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/main.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
