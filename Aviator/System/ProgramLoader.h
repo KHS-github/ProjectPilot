@@ -5,15 +5,17 @@
 #ifndef PROJECTPILOT_PROGRAMLOADER_H
 #define PROJECTPILOT_PROGRAMLOADER_H
 
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
-
-#include "../Util/Cache.hpp"
-#include "../Util/Singleton.hpp"
-
+#include <unordered_map>
 #include "Object.h"
-#include "Stage.h"
-#include "PostOffice.h"
+
+class Stage;
+class PostOffice;
+class BufferSwitcher;
+template <typename T> class Cache;
+class XWindow;
+
+#define LOADER_DEFAULT_INIT 0
+#define LOADER_DEFAULT_DELETE 1
 
 class ProgramLoader : public Object
 {
@@ -21,40 +23,23 @@ public:
     ProgramLoader();
     ~ProgramLoader();
 private:
+    PostOffice m_Worker;
+    BufferSwitcher m_switcher;
+protected:
     std::unordered_map<std::string, Stage*> m_mapStages;
     Cache<Object*> m_cacheObj;
-    PostOffice m_Worker;
+    XWindow m_targetWindow;
+    bool m_bDone;
 protected:
-    Display* m_pDisplay;
-    XVisualInfo* m_pVInfo;
-    Window m_targetWindow;
-protected:
-    int m_nX;
-    int m_nY;
-    int m_nWidth;
-    int m_nHeight;
-
-    std::string m_strName;
-
-protected:
-    virtual void Process() = 0;
+    void Process();
+private:
+    void EndupAll();
 public:
     void LoadFromFile(std::string strFileName);
-
-    void SetX(int X);
-    void SetY(int Y);
-    void SetWidth(int width);
-    void SetHeight(int height);
-    void SetName(std::string strName);
-
-    int GetX();
-    int GetY();
-    int GetWidth();
-    int GetHeight();
-    std::string GetName();
     PostOffice& GetOfficer();
+    XWindow& GetWindow();
 
-    virtual void Initialize() = 0;
+    virtual void OnInitialize();
     void MainLoop();
 
     virtual void ReadMessage(Message& message) = 0;

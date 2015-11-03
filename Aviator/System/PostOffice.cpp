@@ -1,10 +1,9 @@
 #include <string>
-#include <thread>
-#include <queue>
 #include <string.h>
 #include "../Util/Cache.hpp"
 #include "../Util/Logger.h"
 
+#include "Object.h"
 #include "PostOffice.h"
 
 #include "../main.h"
@@ -13,7 +12,12 @@ using namespace std::chrono_literals;
 
 int PostOffice::m_createdObject = 0;
 
-PostOffice::PostOffice(Cache<Object*>* cacheObject) : _cacheObject(cacheObject), _bOfficerGetOffed(false)
+
+std::mutex PostOffice::_queueCheck;
+std::mutex PostOffice::_cacheCheck;
+std::condition_variable PostOffice::_queueChecker;
+
+PostOffice::PostOffice(Cache<Object*>* cacheObject) : _cacheObject(cacheObject), _bOfficerGetOffed(false), _bNotified(false)
 {
     if(m_createdObject == 1){
         PostLog(LOG_TYPE::LOG_WARNING, "PostOffice.cpp", "PostOffice can't be created twice.");
@@ -24,24 +28,34 @@ PostOffice::PostOffice(Cache<Object*>* cacheObject) : _cacheObject(cacheObject),
 
 PostOffice::~PostOffice()
 {
+    Release();
 }
 
 void PostOffice::WorkingOfficer()
 {
     _bOfficerGetOffed = true;
-    PostMail(0, "System", "main", "Hello!", strlen("Hello!"));
-    while(_bOfficerGetOffed)
-    {
-        if(_queueMessage.size() > 0 && _cacheObject != nullptr){
-            Message* message = _queueMessage.front();
-            Object* object =_cacheObject->searchData(message->destName);
-            object->ReadMessage(*message);
-            delete message;
-            _queueMessage.pop();
+    _control = new std::thread([&](){
+        while(_bOfficerGetOffed)
+        {
+            std::unique_lock<std::mutex> locker(_queueCheck);
+            while(!_bNotified)
+            {
+                _queueChecker.wait(locker);
+            }
+
+            std::unique_lock<std::mutex> locker0(_cacheCheck);
+            while(_queueMessage.size() > 0 && _cacheObject != nullptr)
+            {
+                Message *message = _queueMessage.front();
+                Object *object = _cacheObject->searchData(message->destName);
+                object->ReadMessage(*message);
+                delete message;
+                _queueMessage.pop();
+            }
+
+            _bNotified = false;
         }
-        else
-            std::this_thread::sleep_for(15ms);
-    }
+    });
 }
 
 void PostOffice::PostMail(int header, std::string srcName, std::string destName, char *packet, int size)
@@ -52,33 +66,24 @@ void PostOffice::PostMail(int header, std::string srcName, std::string destName,
     message->destName = destName;
     memcpy((void*)&message->packet, packet, sizeof(char) * size);
 
+    std::unique_lock<std::mutex> locker(_queueCheck);
     getMainLoader()->GetOfficer()._queueMessage.push(message);
+    getMainLoader()->GetOfficer()._bNotified = true;
+    getMainLoader()->GetOfficer()._queueChecker.notify_one();
 }
-
-/*
-void startOffice(Cache<Object*>* cacheObject)
-{
-    SetupTargetObjects(cacheObject);
-    thrState = true;
-    std::thread office = std::thread([]() {
-       while(thrState)
-       {
-           if(_queueMessage.size() > 0 && _cacheObject != nullptr){
-               Message* message = _queueMessage.front();
-               Object* object = _cacheObject->searchData(message->destName);
-               object->ReadMessage(*message);
-               delete message;
-               message = nullptr;
-               _queueMessage.pop();
-           }
-           else
-               std::this_thread::sleep_for(15ms);
-       }
-    });
-}*/
-
 
 void PostOffice::SetTargetObjects(Cache<Object *> *cache)
 {
     _cacheObject = cache;
+}
+
+void PostOffice::Release()
+{
+    if(_control != nullptr)
+    {
+        _bOfficerGetOffed = false;
+        _control->join();
+        delete _control;
+        _control = nullptr;
+    }
 }

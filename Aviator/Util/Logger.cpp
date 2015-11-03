@@ -4,9 +4,9 @@
 
 #include <string>
 #include <thread>
-#include <chrono>
 #include <queue>
-#include <time.h>
+#include <mutex>
+#include <condition_variable>
 
 #include "Logger.h"
 
@@ -15,40 +15,18 @@ using namespace std::chrono_literals;
 std::queue<Log*> _queueLog;
 FILE* log;
 
+std::mutex _lockState;
+std::mutex _lockQueue;
+std::mutex _lockFile;
+
+std::condition_variable _queueWait;
+
+std::thread* thr;
+
 bool thrState = false;
 
 void WriteLog(Log& data);
 
-void ThreadFunc()
-{
-    while(thrState)
-    {
-        char str[500];
-        int flag = 0;
-        char c = 0;
-        for(int i=0;c = getc(stderr), c != EOF; i++)
-        {
-            flag = 1;
-            str[i] = c;
-        }
-        if(flag == 1)
-        {
-            PostLog(LOG_TYPE::LOG_WARNING, "System", str);
-            flag = 0;
-        }
-        if(_queueLog.size() > 0){
-            Log* logM = _queueLog.front();
-            WriteLog(*logM);
-            delete logM;
-            _queueLog.pop();
-        }
-        else
-            std::this_thread::sleep_for(15ms);
-    }
-
-    fprintf(log, "\n\n");
-    fclose(log);
-}
 
 void startLogger()
 {
@@ -70,27 +48,62 @@ void startLogger()
         log = fopen(strFileName.c_str(), "w");
     }
 
-    fprintf(log, "-------------------<Start Manager>-------------------\n");
+    thr = new std::thread([&](){
+        {
+            std::unique_lock<std::mutex> ulockFile(_lockFile);
+            fprintf(log, "-------------------<Start Manager>-------------------\n");
+        }
+        while(true)
+        {
+            std::unique_lock<std::mutex> ulockState(_lockState);
+            if(!thrState)break;
 
-    std::thread(ThreadFunc);
+            std::unique_lock<std::mutex> ulockQueue(_lockQueue);
+            _queueWait.wait(ulockQueue);
+
+            while(!_queueLog.empty()) {
+                Log *logM = _queueLog.front();
+                WriteLog(*logM);
+                delete logM;
+                _queueLog.pop();
+            }
+        }
+
+        {
+            std::unique_lock<std::mutex> ulockFile(_lockFile);
+            fprintf(log, "\n\n");
+            fclose(log);
+        }
+    });
 }
 
 void WriteLog(Log& data)
 {
-    std::string strBaseMessage = "[" + data.owner + "] " + data.message;
+    std::string strBaseMessage = "[" + data.owner + "] " + data.message + "\n";
+    char* strMessage;
     switch(data.type)
     {
         case LOG_TYPE::LOG_INFO:
-            fprintf(log, ("[INFO]" + strBaseMessage).c_str());
+            strMessage = (char*)("[INFO]" + strBaseMessage).c_str();
             break;
         case LOG_TYPE::LOG_WARNING:
-            fprintf(log, ("[WARNING]" + strBaseMessage).c_str());
+            strMessage = (char*)("[WARNING]" + strBaseMessage).c_str();
             break;
         case LOG_TYPE::LOG_FATAL:
-            fprintf(log, ("[FATAL]" + strBaseMessage).c_str());
+            strMessage = (char*)("[FATAL]" + strBaseMessage).c_str();
             thrState = false;
             break;
     }
+
+    std::unique_lock<std::mutex> ulockFile(_lockFile);
+    fprintf(log, strMessage);
+    printf(strMessage);
+}
+
+void Endup()
+{
+    thrState = false;
+    thr->join();
 }
 
 void PostLog(LOG_TYPE type, std::string owner, std::string message)
@@ -99,5 +112,8 @@ void PostLog(LOG_TYPE type, std::string owner, std::string message)
     logM->type = type;
     logM->owner = owner;
     logM->message = message;
+
+    std::unique_lock<std::mutex> ulockQueue(_lockQueue);
     _queueLog.push(logM);
+    _queueWait.notify_one();
 }

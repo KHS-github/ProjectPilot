@@ -19,5 +19,6 @@ typedef struct _LOG
 } Log;
 
 void PostLog(LOG_TYPE type, std::string owner, std::string message);
+void Endup();
 
 #endif //PROJECTPILOT_LOGGER_H

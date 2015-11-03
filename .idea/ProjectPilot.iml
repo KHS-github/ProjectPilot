@@ -5,29 +5,38 @@
       <sourceFolder url="file://$MODULE_DIR$/Aviator/Aviator/Aviator.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/Aviator/Aviator.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/CMakeLists.txt" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Aviator/GL/GLPro.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Aviator/GL/GLPro.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Aviator/System/Activor.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Aviator/System/Activor.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/GL/BufferSwitcher.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/GL/BufferSwitcher.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/GL/Camera.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/GL/Camera.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/GL/RenderTarget.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/GL/RenderTarget.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/System/GUI/CoverStage.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/System/GUI/CoverStage.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/System/GUI/Image.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/System/GUI/Image.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/System/GUI/Stage.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/System/GUI/Stage.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/System/Object.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/System/Object.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/System/PostOffice.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/System/PostOffice.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/System/ProgramLoader.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/System/ProgramLoader.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Aviator/System/Stage.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Aviator/System/Stage.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Aviator/Util/Cache.hpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/System/SharedResources.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/System/SharedResources.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/System/XWindow.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/System/XWindow.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/Util/DefinedPattern.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/Util/DefinedPattern.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/Util/Logger.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/Util/Logger.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/Util/ReadStream.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Aviator/Util/Singleton.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/Util/WriteStream.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/main.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/main.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/bin" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

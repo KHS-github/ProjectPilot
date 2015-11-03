@@ -1,0 +1,3 @@
+Load "extmod"
+exec=./Aviator
+screen=1280x768

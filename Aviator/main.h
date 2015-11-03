@@ -6,7 +6,6 @@
 #define PROJECTPILOT_MAIN_H
 
 #include "Util/Logger.h"
-#include "System/ProgramLoader.h"
 #include "Aviator/Aviator.h"
 
 class Main
