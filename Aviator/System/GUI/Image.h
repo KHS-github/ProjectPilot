@@ -8,18 +8,22 @@
 
 #include <string>
 
-#include "../../GL/RenderTarget.h"
+#include "../../GL/RenderTarget.hpp"
 
-class Image : public RenderTarget
+
+class ImageRenderer : public Renderable
 {
-    class Renderer
-    {
-    public:
-        Renderer();
-        ~Renderer();
-    private:
-    public:
-    };
+public:
+    ImageRenderer();
+    ~ImageRenderer();
+private:
+public:
+    virtual void Initialize();
+    virtual void Render();
+};
+
+class Image : public RenderTarget<ImageRenderer>
+{
 public:
     Image(Object* pParent, std::wstring strFileName, int x, int y, int width, int height);
 public:

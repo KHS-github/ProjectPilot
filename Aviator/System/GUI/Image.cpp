@@ -5,6 +5,23 @@
 
 #include "Image.h"
 
+
+ImageRenderer::ImageRenderer()
+{
+}
+
+ImageRenderer::~ImageRenderer()
+{
+}
+
+void ImageRenderer::Initialize()
+{
+}
+
+void ImageRenderer::Render()
+{
+}
+
 Image::Image(Object* pParent, std::wstring strFileName, int x, int y, int width, int height) : RenderTarget(pParent), m_strFileName(strFileName)
 {
     m_ObjectSize = Rect<int>(x, y, x + width, y + height);
@@ -12,7 +29,7 @@ Image::Image(Object* pParent, std::wstring strFileName, int x, int y, int width,
 
 void Image::OnInitialize()
 {
-    Object::OnInitialize();
+    RenderTarget::OnInitialize();
 }
 
 void Image::ReadMessage(Message &message)

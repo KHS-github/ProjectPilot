@@ -13,7 +13,7 @@ CoverStage::CoverStage(ProgramLoader* pParent) : Stage(pParent), m_nWidth(getMai
 
 void CoverStage::OnInitialize()
 {
-    Object::OnInitialize();
+    RenderTarget::OnInitialize();
 }
 
 void CoverStage::ReadMessage(Message &message)

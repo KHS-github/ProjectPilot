@@ -10,7 +10,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Aviator/GL/Camera.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/GL/Camera.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/GL/RenderTarget.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Aviator/GL/RenderTarget.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Aviator/GL/RenderTarget.hpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/System/GUI/CoverStage.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/System/GUI/CoverStage.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Aviator/System/GUI/Image.cpp" isTestSource="false" />
